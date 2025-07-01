@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Dati Terreni</title>
+</head>
+
+<body>
+	<div class="container-fluid py-4" th:fragment="terrenoPage">
+	
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTabellaParticella"
+					aria-expanded="false" aria-controls="collapseTabellaParticella">
+					<span><i class="fa-solid fa-table me-2"></i>Tabella Dati Particelle</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Tabella nella quale vengono mostrati i dati storici relativi alle Particelle">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseTabellaParticella">
+					<div class="card-body">
+						<div class="table-responsive" th:unless="${#lists.isEmpty(particelle)}">
+	
+							<table id="particella-datatable" class="table table-bordered table-hover table-sm">
+								<thead>
+									<tr>
+										<th class="text-center" th:text="#{utils.id}"></th>
+										<th class="text-center" th:text="#{particella.costo}"></th>
+										<th class="text-center" th:text="#{particella.estensione}"></th>
+										<th class="text-center" th:text="#{particella.pendenza}"></th>
+										<th class="text-center" th:text="#{particella.tipologia}"></th>
+										<th class="text-center" th:text="#{particella.annoInstallazione}"></th>
+										<th class="text-center" th:text="#{particella.esposizione}"></th>
+										<th class="text-center" th:text="#{particella.comune}"></th>
+										<th class="text-center" th:text="#{particella.foglio}"></th>
+										<th class="text-center" th:text="#{particella.qualita}"></th>
+										
+									</tr>
+								</thead>
+	
+								<tbody class="table-group-divider">
+									<tr th:each="particella : ${particelle}">
+										<td class="text-center" th:text="${{particella.idParticella}}"></td>
+										<td class="text-center" th:text="${{particella.costo}}  + ' €'"></td>
+										<td class="text-center" th:text="${{particella.estensione}} + ' m²'"></td>
+										<td class="text-center" th:text="${{particella.pendenza}} + ' %'"></td>
+										<td class="text-center" th:text="${{particella.tipologiaLitologia}}"></td>
+										<td class="text-center" th:text="${{particella.annoInstallazione}}"></td>
+										<td class="text-center" th:text="${{particella.esposizione}}"></td>
+										<td class="text-center" th:text="${{particella.comune}}"></td>
+										<td class="text-center" th:text="${{particella.foglio}}"></td>
+										<td class="text-center" th:text="${{particella.qualita}}"></td>
+									</tr>
+								</tbody>
+							</table>
+	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		  
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTabellaRilevazioneTerreno"
+					aria-expanded="false" aria-controls="collapseTabellaRilevazioneTerreno">
+					<span><i class="fa-solid fa-table me-2"></i>Tabella Dati Rilevazioni Morfologiche</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Tabella nella quale vengono mostrati i dati storici relativi alle rilevazioni Morfologiche">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseTabellaRilevazioneTerreno">
+					<div class="card-body">
+						<div class="table-responsive" th:unless="${#lists.isEmpty(rilevazioniTerreno)}">
+	
+							<table id="rilevazione-datatable" class="table table-bordered table-hover table-sm">
+								<thead>
+									<tr>
+										<th class="text-center" th:text="#{utils.id}"></th>
+										<th class="text-center" th:text="#{terreno.phSuolo}"></th>
+										<th class="text-center" th:text="#{terreno.umidita}"></th>
+										<th class="text-center" th:text="#{terreno.capacitaAssorbente}"></th>
+										<th class="text-center" th:text="#{terreno.porosita}"></th>
+										<th class="text-center" th:text="#{terreno.temperatura}"></th>
+										<th class="text-center" th:text="#{terreno.dataRilevazione}"></th>
+										<th class="text-center" th:text="#{utils.idParticellaParticella}"></th>
+									</tr>
+								</thead>
+	
+								<tbody class="table-group-divider">
+									<tr th:each="terreno : ${rilevazioniTerreno}">
+										<td class="text-center" th:text="${{terreno.idRilevazioneTerreno}}"></td>
+										<td class="text-center" th:text="${{terreno.phSuolo}}"></td>
+										<td class="text-center" th:text="${{terreno.umidita}} + ' %'"></td>
+										<td class="text-center" th:text="${{terreno.capacitaAssorbente}} + ' %'"></td>
+										<td class="text-center" th:text="${{terreno.porosita}} + ' %'"></td>
+										<td class="text-center" th:text="${{terreno.temperatura}} + ' °C'"></td>
+										<td class="text-center" th:text="${{terreno.dataRilevazione}}"></td>
+										<td class="text-center" th:text="${{terreno.idParticellaParticella}}"></td>
+									</tr>
+								</tbody>
+							</table>
+	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBarChartTerreno"
+					aria-expanded="false" aria-controls="collapseBarChartTerreno">
+					Rotazione delle Colture
+				</div>
+				<div class="collapse" id="collapseBarChartTerreno">
+					<div class="row g-2 mb-3 mt-3">
+						<div class="col-md-4 offset-md-3">
+							<div class="form">
+								<input id="particelleDataList" class="form-control" list="particelleDatalistOptions"
+									placeholder="Scrivi il terreno da cercare...">
+								<datalist id="particelleDatalistOptions">
+									<option selected disabled></option>
+								</datalist>
+							</div>
+						</div>
+		
+						<div class="col-md-2">
+							<button id="ricercaTerreno" type="submit" class="btn btn-primary mb-3" disabled>Invio</button>
+						</div>
+					</div>
+					
+					<div class="row align-items-center">
+						<div id="terreno-chart-container1" class="chart-container col-auto p-2 mx-auto border rounded">
+							<canvas id="rotazioneColtureBarChart"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
