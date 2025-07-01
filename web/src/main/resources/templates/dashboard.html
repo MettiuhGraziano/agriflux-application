@@ -15,6 +15,10 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 	<!-- Chart.js per la gestione delle Date -->
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+	<!-- Chart.js Date Adapter-->
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.umd.min.js"></script>
+	<!-- Chart.js Zoom Plugin -->
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
 </head>
 
 <body>
@@ -114,10 +118,10 @@
 	<script defer src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
 	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-	<script data-th-src="@{/js/utils.js}"></script>
+	<script defer data-th-src="@{/js/utils.js}"></script>
 	<script data-th-src="@{/js/chart/coltura.js}"></script>
 	<script data-th-src="@{/js/chart/produzione.js}"></script>
-	<script data-th-src="@{/js/chart/terreno.js}"></script>
+	<script type="module" data-th-src="@{/js/chart/terreno.js}"></script>
 	<script data-th-src="@{/js/chart/ambiente.js}"></script>
 	<script data-th-src="@{/js/chart/fatturato.js}"></script>
 	<script data-th-src="@{/js/chart/dashboard.js}"></script>

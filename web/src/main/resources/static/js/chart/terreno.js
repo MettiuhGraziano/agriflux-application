@@ -60,6 +60,8 @@ function generaColoreRandom() {
 	return "rgb(" + r + "," + g + "," + b + ")";
 }
 
+Chart.register(ChartZoom);
+
 //ROTAZIONE COLTURE BARCHART
 function rotazioneColtureBarChart(terrenoBarChartInstance) {
 
@@ -94,8 +96,14 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 
 					const ctxLine = document.getElementById("rotazioneColtureBarChart").getContext("2d");
 
-					var dateMin = dtoList[dtoList.length - 1].dateRilevazione[0];
-					var dateMax = dtoList[0].dateRilevazione[dtoList[0].dateRilevazione.length - 1];
+					// *** PUNTO CHIAVE PER L'ALTEZZA DINAMICA ***
+					const BAR_HEIGHT = 40; // Altezza desiderata per ogni singola barra (in pixel)
+					const PADDING_PER_BAR = 10; // Spazio extra tra le barre per un po' di respiro
+					const MIN_CHART_HEIGHT = 200; // Altezza minima del grafico se ci sono poche barre
+					const TOP_BOTTOM_PADDING = 100; // Spazio extra per titoli, assi, legenda
+
+					var dateMin = new Date(dtoList[dtoList.length - 1].dateRilevazione[0]);
+					var dateMax = new Date(dtoList[0].dateRilevazione[dtoList[0].dateRilevazione.length - 1]);
 
 					const prodottiColtivati = [];
 
@@ -120,14 +128,19 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 					
 					const datasetDinamico = Array.from(datasetMap.values());
 					
+					const calculatedCanvasHeight = Math.max(
+						MIN_CHART_HEIGHT,
+						(Object.keys(datasetMap).length * (BAR_HEIGHT + PADDING_PER_BAR)) + TOP_BOTTOM_PADDING);
+
+					// Applica l'altezza calcolata al canvas
+					console.log(ctxLine);
+					document.getElementById("rotazioneColtureBarChart").setAttribute("height", `${calculatedCanvasHeight}px`);
+					
 					terrenoBarChartInstance = new Chart(ctxLine, {
 						type: 'bar',
 						data: {
 							labels: prodottiColtivati,
-							datasets: datasetDinamico,
-							parsing: {
-								xAxisKey: 'x'
-							}
+							datasets: datasetDinamico
 						}, options: {
 							responsive: true,
 							maintainAspectRatio: false,
@@ -144,14 +157,15 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 											day: 'yyyy'
 										}
 									},
-									min: dateMin,
-									max: dateMax,
+									min: dateMin ? dateMin.toISOString() : undefined,
+									max: dateMax ? dateMax.toISOString() : undefined,
 									title: {
 										display: true,
 										text: 'Data Rilevazione Terreno'
 									}
 								},
 								y: {
+									stacked: true,
 									title: {
 										display: true,
 										text: 'Prodotto Coltivato'
@@ -161,7 +175,9 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 							elements: {
 								bar: {
 									borderWidth: 2,
-									barThickness: 100
+									barPercentage: 0.8,
+									categoryPercentage: 0.8,
+									borderSkipped: false
 								}
 							},
 							plugins: {
@@ -177,6 +193,29 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 												`Periodo rilevazione: dal ${start} al ${end}`
 											];
 										}
+									}
+								},
+								// *** INTEGRAZIONE PLUGIN ZOOM/PAN ***							
+								zoom: {
+									zoom: {
+										wheel: {
+											enabled: true
+										},
+										pinch: {
+											enabled: true
+										},
+										mode: 'x',
+										limits: {
+											x: {
+												min: dateMin ? dateMin.toISOString() : undefined,
+												max: dateMax ? dateMax.toISOString() : undefined
+											}
+										}
+									},
+									pan: {
+										enabled: true,
+										mode: 'x',
+										threshold: 10
 									}
 								}
 							}

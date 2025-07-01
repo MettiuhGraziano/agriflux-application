@@ -84,10 +84,10 @@ html, body {
 	border-radius: 10px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	width: 100% !important;
-	min-height: 500px !important;
+	min-height: 500px;
+	max-height: 800px;
 }
 
 canvas {
 	width: 100% !important;
-	height: 500px !important;
 }
