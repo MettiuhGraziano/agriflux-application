@@ -1,0 +1,93 @@
+html, body {
+  height: 100% !important;
+  margin: 0;
+}
+.dropdown-menu,
+.nav-bg-green-custom {
+	background-color: #1f3b2c !important;
+}
+
+.navbar-custom {
+	height: 80px !important;
+}
+
+.navbar-custom .nav-link {
+	color: #D4FFD6;
+}
+
+.navbar-custom .nav-link:hover {
+	color: #ffffff;
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+.custom-btn-navbar {
+	background-color: #3E8E41;
+	color: #D4FFD6 !important;
+	border: none;
+}
+
+.custom-btn-navbar:hover {
+	background-color: #4CAF50;
+	color: #ffffff;
+}
+
+.custom-btn-navbar:active,
+.custom-btn-navbar.active,
+.custom-btn-navbar:focus {
+	background-color: rgb(11, 108, 33) !important;
+	color: #ffffff !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+.navbar-text {
+	color: #D4FFD6 !important;
+}
+
+.footer-text {
+	color: #1f3b2c !important;
+	height: 2.5rem;
+	width: 100%; 
+	bottom: 0; 
+	left: 0%;
+}
+
+.tab-content {
+	height: 100vh !important;
+	background-color: rgb(187, 240, 162);
+	padding-top: 80px;
+	min-height: calc(100vh - 80px) !important;
+	padding-bottom: 2.5rem;
+	position: relative;
+}
+
+.homepage-card {
+	height: 100vh !important;
+}
+
+.homepage-card-body {
+	background-color: rgb(187, 240, 162) !important;
+}
+
+.card-body-custom {
+	background-color: rgb(255, 255, 255) !important;
+}
+
+.card-text-custom {
+	width: 100%;
+	word-wrap: break-word;
+}
+
+.chart-container {
+	background-color: rgb(255, 255, 255);
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	width: 100% !important;
+	min-height: 500px !important;
+}
+
+canvas {
+	width: 100% !important;
+	height: 500px !important;
+}

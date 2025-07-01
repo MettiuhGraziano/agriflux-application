@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Dati Colture</title>
+</head>
+
+<body>
+	<div class="container-fluid py-4" th:fragment="colturaPage">
+		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTabellaColture"
+					aria-expanded="false" aria-controls="collapseTabellaColture">
+					<span><i class="fa-solid fa-table me-2"></i>Tabella Colture</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left" title="Tabella nella quale vengono mostrati i dati storici relativi alle Colture">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseTabellaColture">
+					<div class="card-body">
+						<div class="table-responsive" th:unless="${#lists.isEmpty(colture)}">
+		
+							<table id="coltura-datatable" class="table table-bordered table-hover table-sm">
+								<thead>
+									<tr>
+										<th class="text-center" th:text="#{utils.id}"></th>
+										<th class="text-center" th:text="#{coltura.prodotto}"></th>
+										<th class="text-center" th:text="#{coltura.prezzo}"></th>
+										<th class="text-center" th:text="#{coltura.dataSemina}"></th>
+										<th class="text-center" th:text="#{coltura.dataRaccolto}"></th>
+									</tr>
+								</thead>
+		
+								<tbody class="table-group-divider">
+									<tr th:each="coltura : ${colture}">
+										<td class="text-center" th:text="${{coltura.idColtura}}"></td>
+										<td class="text-center" th:text="${{coltura.nomeOrtaggio}}"></td>
+										<td class="text-center" th:text="${{coltura.prezzoKg}} + ' €/Kg'"></td>
+										<td class="text-center" th:text="${{coltura.dataSemina}}"></td>
+										<td class="text-center" th:text="${{coltura.dataRaccolto}}"></td>
+									</tr>
+								</tbody>
+							</table>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse"
+					data-bs-target="#collapseColturaLineChart" aria-expanded="false" aria-controls="collapseColturaLineChart">
+					<span><i class="fa-solid fa-chart-line me-2"></i>Andamento Prezzi</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Grafico dell'andamento dei prezzi dei singoli ortaggi rilevati ad ogni raccolto">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseColturaLineChart">
+					<select id="productSelect" class="form-select card-header mb-3 mt-3">
+						<option selected disabled>Seleziona un prodotto...</option>
+					</select>
+					
+					<div class="row align-items-center">
+						<div id="coltura-chart-container1" class="chart-container col-auto p-2 mx-auto border rounded">
+							<canvas id="colturaLineChart"></canvas>
+						</div>
+					</div>
+					
+					<div class="d-flex justify-content-start mt-2 mb-3">
+						<button id="downloadColturaLineChart" class="btn btn-outline-success">
+							<i class="fa-solid fa-download"></i> Scarica PDF
+						</button>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseColturaCharts"
+					aria-expanded="false" aria-controls="collapseColturaCharts">
+					<span><i class="fa-solid fa-chart-column me-2"></i><i class="fa-solid fa-chart-pie me-2"></i>Storico Colture</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Grafici a barre e torta con le numeriche storiche relative rispettivamente ai singoli ortaggi coltivati e alle loro famiglie">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseColturaCharts">
+					<div class="row g-2 mb-3 px-2 mt-3">
+						<div class="col-sm-6">
+							<div id="coltura-chart-container2" class="chart-container border rounded">
+								<canvas id="colturaBarChart"></canvas>
+							</div>
+						</div>
+					
+						<div class="col-sm-6">
+							<div id="coltura-chart-container3" class="chart-container border rounded">
+								<canvas id="colturaPieChart"></canvas>
+							</div>
+						</div>
+					</div>
+					<div class="d-flex justify-content-start mt-2 mb-3">
+						<button id="downloadNumeroColtivazioni" class="btn btn-outline-success">
+							<i class="fa-solid fa-download"></i> Scarica PDF
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+</body>
+
+</html>

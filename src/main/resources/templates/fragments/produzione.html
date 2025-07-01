@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Dati Produzione</title>
+</head>
+
+<body>
+	<div class="container-fluid py-4" th:fragment="produzionePage">
+		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse"
+					data-bs-target="#collapseTabellaProduzione" aria-expanded="false" aria-controls="collapseTabellaProduzione">
+					<span><i class="fa-solid fa-table me-2"></i>Tabella Dati Produzione</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Tabella nella quale vengono mostrati i dati storici relativi alle Produzioni">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseTabellaProduzione">
+					<div class="card-body">
+						<div class="table-responsive" th:unless="${#lists.isEmpty(produzioni)}">
+		
+							<table id="produzione-datatable" class="table table-bordered table-hover table-sm">
+								<thead>
+									<tr>
+										<th class="text-center" th:text="#{utils.id}"></th>
+										<th class="text-center" th:text="#{produzione.raccolto}"></th>
+										<th class="text-center" th:text="#{produzione.raccoltoVenduto}"></th>
+										<th class="text-center" th:text="#{produzione.raccoltoMarcio}"></th>
+										<th class="text-center" th:text="#{produzione.raccoltoTerzi}"></th>
+										<th class="text-center" th:text="#{produzione.fatturatoRaccolto}"></th>
+										<th class="text-center" th:text="#{produzione.consumoIdrico}"></th>
+										<th class="text-center" th:text="#{produzione.numLavoratori}"></th>
+										<th class="text-center" th:text="#{produzione.speseProduzione}"></th>
+										<th class="text-center" th:text="#{utils.idColtura}"></th>
+									</tr>
+								</thead>
+		
+								<tbody class="table-group-divider">
+									<tr th:each="produzione : ${produzioni}">
+										<td class="text-center" th:text="${{produzione.idProduzione}}"></td>
+										<td class="text-center" th:text="${{produzione.quantitaRaccolto}} + ' Kg'"></td>
+										<td class="text-center" th:text="${{produzione.quantitaRaccoltoVenduto}} + ' Kg'"></td>
+										<td class="text-center" th:text="${{produzione.quantitaRaccoltoMarcio}} + ' Kg'"></td>
+										<td class="text-center" th:text="${{produzione.quantitaRaccoltoTerzi}} + ' Kg'"></td>
+										<td class="text-center" th:text="${{produzione.fatturatoRaccolto}} + ' €'"></td>
+										<td class="text-center" th:text="${{produzione.consumoIdrico}} + ' m³'"></td>
+										<td class="text-center" th:text="${{produzione.numLavoratori}}"></td>
+										<td class="text-center" th:text="${{produzione.speseProduzione}} + ' €'"></td>
+										<td class="text-center" th:text="${{produzione.idColturaColtura}}"></td>
+									</tr>
+								</tbody>
+							</table>
+		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProduzioneMultipleCharts"
+					aria-expanded="false" aria-controls="collapseProduzioneMultipleCharts">
+					<span><i class="fa-solid fa-chart-line me-2"></i><i class="fa-solid fa-circle-nodes me-2"></i>Andamento Produzione/Vendita/Fatturato Raccolto</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Grafici a linee e radar che mostrano rispettivamente l'andamento delle quantità di raccolto e del fatturato per singolo ortaggio">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseProduzioneMultipleCharts">
+					<div class="row g-2 mb-3 mt-3">
+						<div class="col-md-4 offset-md-3">
+							<div class="form">
+								<input id="prodottiDataList" class="form-control" list="datalistOptions"
+									placeholder="Scrivi il prodotto da cercare...">
+								<datalist id="datalistOptions">
+									<option selected disabled></option>
+								</datalist>
+							</div>
+						</div>
+		
+						<div class="col-md-2">
+							<button id="ricercaAnno" type="submit" class="btn btn-primary mb-3" disabled>Invio</button>
+						</div>
+					</div>
+		
+					<div class="row g-2 align-items-center mb-3 px-2">
+						<div class="col-sm-7">
+							<div id="produzione-chart-container1" class="chart-container border rounded">
+								<canvas id="produzioneMultipleLineChart"></canvas>
+							</div>
+						</div>
+		
+						<div class="col-sm-5">
+							<div id="produzione-chart-container2" class="chart-container border rounded">
+								<canvas id="produzioneRadarChart"></canvas>
+							</div>
+						</div>
+					</div>
+					
+					<div class="d-flex justify-content-start mt-2 mb-3">
+						<button id="downloadProduzioneAnnualeRaccolto" class="btn btn-outline-success">
+							<i class="fa-solid fa-download"></i> Scarica PDF
+						</button>
+					</div>
+		
+				</div>
+			</div>
+		</div>
+		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProduzioneScatterChart"
+					aria-expanded="false" aria-controls="collapseProduzioneScatterChart">
+					<span><i class="fa-solid fa-circle-half-stroke me-2"></i>Distribuzione Produzioni e Morfologia Terreno</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Grafico scatter che mostra la distribuzione delle varie produzioni in un range temporale; se si clicca su un coordinata viene mostrata la morfologia della particella relativa a quella produzione">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse mb-3" id="collapseProduzioneScatterChart">
+					<div class="card-body">
+						<div class="form card-header row">
+							<div class="col-md-4">
+								<label for="startDate" class="form-label">Data Inizio</label>
+								<input type="date" class="form-control" id="startDate" name="startDate">
+							</div>
+							<div class="col-md-4">
+								<label for="endDate" class="form-label">Data Fine</label>
+								<input type="date" class="form-control" id="endDate" name="endDate">
+							</div>
+							<div class="col-md-2 offset-md-1 align-self-end">
+								<button id="invio" type="submit" class="btn btn-primary">Invio</button>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row g-2 mb-3 px-2">
+						<div class="col-sm-8">
+							<div id="produzione-chart-container4" class="card chart-container border rounded">
+								<canvas id="produzioneScatterChart"></canvas>
+							</div>
+						</div>
+					
+						<div class="col-sm-4">
+							<div class="card mb-3">
+								<div class="card-body">
+									<p class="card-text">Passando il mouse sopra i vari pointer si può visualizzare: </p>
+									PRODOTTO COLTIVATO, DATA DI RACCOLTA, CODICE DI PRODUZIONE.
+									Cliccando sul pointer, appariranno i relativi dati morfologici nella tabella sottostante.
+									Se si desidare cambiare il range di date o togliere/immettere più prodotti dalla visualizzazione è possibile interagire con i grafico
+								</div>
+							</div>
+							
+							<div class="table-responsive rounded">
+								<table id="produzione-chart-datatable" class="table table-bordered table-hover table-sm">
+									<thead>
+										<tr>
+											<th class="text-center"></th>
+											<th class="text-center">#</th>
+										</tr>
+									</thead>
+						
+									<tbody class="table-group-divider">
+										<tr>
+											<td class="text-center" th:text="#{coltura.prodotto}"></td>
+										</tr>
+										<tr>
+											<td class="text-center" th:text="#{utils.idParticellaParticella}"></td>
+										</tr>
+										<tr>
+											<td class="text-center" th:text="#{particella.estensione}"></td>
+										</tr>
+										<tr>
+											<td class="text-center" th:text="#{particella.pendenza}"></td>
+										</tr>
+										<tr>
+											<td class="text-center" th:text="#{particella.esposizione}"></td>
+										</tr>
+										<tr>
+											<td class="text-center" th:text="#{particella.tipologia}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="d-flex justify-content-start mt-2 mb-3">
+						<button id="downloadDistribuzioneProduzione" class="btn btn-outline-success">
+							<i class="fa-solid fa-download"></i> Scarica PDF
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProduzioneHorizontalBarChart"
+					aria-expanded="false" aria-controls="collapseProduzioneHorizontalBarChart">
+					<span><i class="fa-solid fa-chart-bar me-2"></i>Variazione Annuale Tempo Semina -> Raccolto</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Grafico a barre in cui viene mostrata la variazione annuale dei tempi (per ortaggio coltivato) dalla semina alla raccolta">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseProduzioneHorizontalBarChart">
+					<select id="annoRiferimentoSelect" class="form-select card-header mb-3 mt-3">
+						<option selected disabled>Seleziona anno riferimento...</option>
+					</select>
+					
+					<div class="row align-items-center">
+						<div id="produzione-chart-container3" class="chart-container col-auto p-2 mx-auto border rounded">
+							<canvas id="produzioneBarChartHorizontal"></canvas>
+						</div>
+					</div>
+					
+					<div class="d-flex justify-content-start mt-2 mb-3">
+						<button id="downloadVariazioneTempi" class="btn btn-outline-success">
+							<i class="fa-solid fa-download"></i> Scarica PDF
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+
+</html>
