@@ -56,6 +56,43 @@
 			</div>
 		</div>
 		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button"
+					data-bs-toggle="collapse" data-bs-target="#collapseMultilineChartTerreno" aria-expanded="false"
+					aria-controls="collapseMultilineChartTerreno">
+					<span><i class="fa-solid fa-chart-area me-2"></i></i>Andamento Ricavi/Spese Particella</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Grafico multilinea che mostra l'andamento anno per anno dei ricavi e delle spese delle singole Particelle">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseMultilineChartTerreno">
+					<div class="row g-2 mb-3 mt-3">
+						<div class="col-md-4 offset-md-3">
+							<div class="form">
+								<input id="terreniDataList" class="form-control" list="terreniDatalistOptions"
+									placeholder="Scrivi la particella da cercare...">
+								<datalist id="terreniDatalistOptions">
+									<option selected disabled></option>
+								</datalist>
+							</div>
+						</div>
+		
+						<div class="col-md-2">
+							<button id="ricercaParticella" type="submit" class="btn btn-primary mb-3" disabled>Invio</button>
+						</div>
+					</div>
+		
+					<div class="row align-items-center">
+						<div id="terreno-chart-container1" class="chart-container col-auto p-2 mx-auto border rounded">
+							<canvas id="fatturatoMultilineChart"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 	</div>
 </body>
 

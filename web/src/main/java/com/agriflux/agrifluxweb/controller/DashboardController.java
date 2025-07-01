@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.agriflux.agrifluxshared.dto.ambiente.VariazioneValoriParametriAmbienteDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
+import com.agriflux.agrifluxshared.dto.fatturato.FatturatoRicaviSpeseDTO;
 import com.agriflux.agrifluxshared.dto.ortaggio.OrtaggioDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaTempiDTO;
@@ -181,6 +182,12 @@ public class DashboardController implements DataChartService {
 	    return "fragments/fatturato :: fatturatoPage";
 	}
 	
+	@Override
+	@GetMapping("/findFatturatoRicaviSpese")
+	@ResponseBody
+	public Map<Long, List<FatturatoRicaviSpeseDTO>> findFatturatoRicaviSpese() {
+		return dashboardServiceImpl.findFatturatoRicaviSpese();
+	}
 	
 	//UTILS
 	

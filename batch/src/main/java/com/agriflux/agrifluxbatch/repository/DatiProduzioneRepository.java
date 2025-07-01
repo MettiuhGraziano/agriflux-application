@@ -8,9 +8,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import com.agriflux.agrifluxbatch.entity.Produzione;
-import com.agriflux.agrifluxbatch.repository.projection.ProduzioneParticellaColturaOrtaggioProjection;
 import com.agriflux.agrifluxbatch.repository.projection.produzione.ProduzioneJoinColturaFatturatoProjection;
 import com.agriflux.agrifluxbatch.repository.projection.produzione.ProduzioneJoinColturaTempiProjection;
+import com.agriflux.agrifluxbatch.repository.projection.produzione.ProduzioneParticellaColturaOrtaggioProjection;
 import com.agriflux.agrifluxbatch.repository.projection.produzione.ProduzioneQuantitaJoinColturaProjection;
 
 @Repository

@@ -1,6 +1,7 @@
 package com.agriflux.agrifluxweb.service.fatturato;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.agriflux.agrifluxshared.dto.fatturato.FatturatoDTO;
+import com.agriflux.agrifluxshared.dto.fatturato.FatturatoRicaviSpeseDTO;
 import com.agriflux.agrifluxshared.service.fatturato.DatiFatturatoService;
 
 @Service
@@ -35,6 +37,21 @@ public class DatiFatturatoClientServiceImpl implements DatiFatturatoService {
 
 		ResponseEntity<List<FatturatoDTO>> response = restTemplate.exchange(url, HttpMethod.GET, httpHentity,
 				new ParameterizedTypeReference<List<FatturatoDTO>>() {
+				});
+
+		return response.getBody();
+	}
+
+	@Override
+	public Map<Long, List<FatturatoRicaviSpeseDTO>> findFatturatoRicaviSpese() {
+		String url = batchUrl + "/findFatturatoRicaviSpese";
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+		HttpEntity<Void> httpHentity = new HttpEntity<>(httpHeaders);
+
+		ResponseEntity<Map<Long, List<FatturatoRicaviSpeseDTO>>> response = restTemplate.exchange(url, HttpMethod.GET,
+				httpHentity, new ParameterizedTypeReference<Map<Long, List<FatturatoRicaviSpeseDTO>>>() {
 				});
 
 		return response.getBody();

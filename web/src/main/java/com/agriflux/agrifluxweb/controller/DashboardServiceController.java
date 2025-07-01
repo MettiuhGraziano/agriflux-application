@@ -12,6 +12,7 @@ import com.agriflux.agrifluxshared.dto.azienda.AziendaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.dto.fatturato.FatturatoDTO;
+import com.agriflux.agrifluxshared.dto.fatturato.FatturatoRicaviSpeseDTO;
 import com.agriflux.agrifluxshared.dto.particella.DatiParticellaDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaTempiDTO;
@@ -165,6 +166,14 @@ public class DashboardServiceController implements DashboardService {
 	@Operation(summary = "Recupera i dati relativi al Fatturato", description = "Restituisce una lista di DTO contenenti i dati relativi al Fatturato")
 	public List<FatturatoDTO> findAllFatturatoSortById() {
 		return dashboardServiceImpl.findAllFatturatoSortById();
+	}
+
+	@Override
+	@GetMapping("/getFatturatoRicaviSpese")
+	@Operation(summary = "Mostra una mappa dei dati relativi al Fatturato di ogni Particella anno per anno", description = "Restituisce una mappa con in chiave l'id della Particella "
+			+ "e come valore una lista di oggetti contenenti l'anno di riferimento del fatturato, i ricavi e i costi di spesa della particella")
+	public Map<Long, List<FatturatoRicaviSpeseDTO>> findFatturatoRicaviSpese() {
+		return dashboardServiceImpl.findFatturatoRicaviSpese();
 	}
 
 }

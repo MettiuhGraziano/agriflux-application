@@ -132,8 +132,6 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 						MIN_CHART_HEIGHT,
 						(Object.keys(datasetMap).length * (BAR_HEIGHT + PADDING_PER_BAR)) + TOP_BOTTOM_PADDING);
 
-					// Applica l'altezza calcolata al canvas
-					console.log(ctxLine);
 					document.getElementById("rotazioneColtureBarChart").setAttribute("height", `${calculatedCanvasHeight}px`);
 					
 					terrenoBarChartInstance = new Chart(ctxLine, {

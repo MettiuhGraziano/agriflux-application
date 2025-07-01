@@ -6,11 +6,12 @@
     <groupId>com.agriflux</groupId>
     <artifactId>agriflux-application</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>pom</packaging> <modules>
-        <module>web</module>
-        <module>batch</module>
-        <module>shared</module>
-    </modules>
+	<packaging>pom</packaging>
+	<modules>
+		<module>web</module>
+		<module>batch</module>
+		<module>shared</module>
+	</modules>
 
     <dependencyManagement>
         <dependencies>

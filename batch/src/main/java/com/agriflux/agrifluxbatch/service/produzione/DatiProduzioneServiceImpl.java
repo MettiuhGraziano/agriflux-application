@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 
 import com.agriflux.agrifluxbatch.entity.Produzione;
 import com.agriflux.agrifluxbatch.repository.DatiProduzioneRepository;
-import com.agriflux.agrifluxbatch.repository.projection.ProduzioneParticellaColturaOrtaggioProjection;
 import com.agriflux.agrifluxbatch.repository.projection.produzione.ProduzioneJoinColturaFatturatoProjection;
 import com.agriflux.agrifluxbatch.repository.projection.produzione.ProduzioneJoinColturaTempiProjection;
+import com.agriflux.agrifluxbatch.repository.projection.produzione.ProduzioneParticellaColturaOrtaggioProjection;
 import com.agriflux.agrifluxbatch.repository.projection.produzione.ProduzioneQuantitaJoinColturaProjection;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaTempiDTO;

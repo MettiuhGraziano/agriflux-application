@@ -11,6 +11,7 @@ import com.agriflux.agrifluxshared.dto.azienda.AziendaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.dto.fatturato.FatturatoDTO;
+import com.agriflux.agrifluxshared.dto.fatturato.FatturatoRicaviSpeseDTO;
 import com.agriflux.agrifluxshared.dto.ortaggio.OrtaggioDTO;
 import com.agriflux.agrifluxshared.dto.particella.DatiParticellaDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaDTO;
@@ -151,6 +152,11 @@ public class DashboardServiceImpl implements DashboardService {
 	@Override
 	public List<FatturatoDTO> findAllFatturatoSortById() {
 		return datiFatturatoService.findAllFatturatoSortById();
+	}
+
+	@Override
+	public Map<Long, List<FatturatoRicaviSpeseDTO>> findFatturatoRicaviSpese() {
+		return datiFatturatoService.findFatturatoRicaviSpese();
 	}
 
 }

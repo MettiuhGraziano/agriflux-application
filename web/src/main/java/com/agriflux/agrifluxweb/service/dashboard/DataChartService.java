@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.agriflux.agrifluxshared.dto.ambiente.VariazioneValoriParametriAmbienteDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
+import com.agriflux.agrifluxshared.dto.fatturato.FatturatoRicaviSpeseDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaTempiDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneParticellaColturaOrtaggioDTO;
@@ -78,8 +79,16 @@ public interface DataChartService {
 	 * Metodo che restituisce una mappa con in chiave i nomi dei parametri calcolati sull'Ambiente e come valore una lista di oggetti
 	 * contenente il valore del campo, la data di rilevazione e la percentuale di variazione rispetto l'anno precedente
 	 * 
-	 * @return
+	 * @return Map<String, List<VariazioneValoriParametriAmbienteDTO>>
 	 */
 	Map<String, List<VariazioneValoriParametriAmbienteDTO>> getVariazioneValoriParametriAmbiente();
+	
+	/**
+	 * Metodo che restituisce una mappa con in chiave l'id della Particella e come valore una lista
+	 * di dto contenenti l'anno di riferimento, le spese e i ricavi
+	 * 
+	 * @return Map<Long, List<FatturatoRicaviSpeseDTO>>
+	 */
+	Map<Long, List<FatturatoRicaviSpeseDTO>> findFatturatoRicaviSpese();
 	
 }
