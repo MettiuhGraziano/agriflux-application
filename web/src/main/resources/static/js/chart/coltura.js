@@ -70,7 +70,6 @@ function colturaLineChartDinamica(colturaLineChartInstance) {
 		.then(data => {
 			const select = document.getElementById("productSelect");
 
-			// Popola la Select con le chiavi della mappa
 			Object.keys(data).forEach(prodotto => {
 				const option = document.createElement("option");
 				option.value = prodotto;
@@ -78,7 +77,6 @@ function colturaLineChartDinamica(colturaLineChartInstance) {
 				select.appendChild(option);
 			});
 			
-			// Evento cambio selezione
 			select.addEventListener("change", function() {
 				const prodottoSelezionato = this.value;
 				const colturaData = data[prodottoSelezionato];
@@ -86,10 +84,8 @@ function colturaLineChartDinamica(colturaLineChartInstance) {
 				const labels = colturaData.dataRaccoltoList;
 				const values = colturaData.prezzoKgList;
 				
-
 				const ctx = document.getElementById("colturaLineChart").getContext("2d");
 				
-				// Se esiste già un grafico, viene distrutto prima di crearne uno nuovo
 				if (colturaLineChartInstance) {
 					colturaLineChartInstance.destroy();
 				}
@@ -111,11 +107,28 @@ function colturaLineChartDinamica(colturaLineChartInstance) {
 						scales: {
 							y: {
 								beginAtZero: false,
-								title: { display: true, text: 'Prezzo €/kg' }
+								title: { display: true, text: 'Prezzo' }
 							},
 							x: {
 								title: { display: true, text: 'Data Raccolto' },
 								beginAtZero: false
+							}
+						}, plugins: {
+							tooltip: {
+								callbacks: {
+									title: function(tooltipItems) {
+										return `Andamento Prezzo ${prodottoSelezionato}`;
+									},
+									label: function(context) {
+										const dataRaccolto = context.label;
+										const value = context.parsed.y;
+
+										return [
+											`Data Raccolto: ${dataRaccolto}`,
+											`Prezzo: ${value} €/Kg`
+										];
+									}
+								}
 							}
 						}
 					}
@@ -164,7 +177,6 @@ function colturaPieChart(colturaPieChartInstance) {
 		.then(data => {
 
 			const colorArray = [];
-			//GENERO COLORI RANDOM X OGNI COLTURA
 			Object.keys(data).forEach(prodotto => {
 				colorArray.push(generaColoreRandom());
 			});

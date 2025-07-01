@@ -46,6 +46,7 @@ document.getElementById('terreno-tab').addEventListener('click', function() {
 			collapseBarChartTerreno.addEventListener('shown.bs.collapse', function() {
 				if (!terrenoBarChartInstance) {
 					rotazioneColtureBarChart(terrenoBarChartInstance);
+					downloadRotazioneColtureTerreno();
 				}
 			});
 			
@@ -222,4 +223,27 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 				});
 			});
 		})
+}
+
+function downloadRotazioneColtureTerreno() {
+	document.getElementById("downloadRotazioneColtureTerreno").addEventListener("click", async () => {
+		const { jsPDF } = window.jspdf;
+
+		const pdf = new jsPDF({
+			orientation: 'landscape',
+			unit: 'px',
+			format: 'a4'
+		});
+
+		const canvas = document.getElementById("rotazioneColtureBarChart");
+		const imageData = canvas.toDataURL("image/png", 1.0);
+
+		const width = pdf.internal.pageSize.getWidth();
+		const height = canvas.height * (width / canvas.width);
+
+		pdf.text("Rotazione Colture Terreno Storica", 40, 30);
+		pdf.addImage(imageData, 'PNG', 40, 50, width - 80, height);
+
+		pdf.save("rotazione_colture_terreno.pdf");
+	});
 }

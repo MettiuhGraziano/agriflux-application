@@ -103,6 +103,24 @@ function multilineFatturatoChart(multilineFatturatoChartInstance) {
 									y: {
 										beginAtZero: true
 									}
+								}, tooltip: {
+									callbacks: {
+										label: function(context) {
+											const label = context.dataset.label;
+											const value = context.formattedValue;
+											return [
+												`${label}: ${value} €`
+											];
+										}
+									}
+								}
+							}, animations: {
+								tension: {
+									duration: 5000,
+									easing: 'linear',
+									from: 1,
+									to: 0,
+									loop: true
 								}
 							}
 						}
