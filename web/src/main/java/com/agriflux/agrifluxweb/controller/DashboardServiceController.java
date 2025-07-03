@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.agriflux.agrifluxshared.dto.ambiente.AmbienteDTO;
 import com.agriflux.agrifluxshared.dto.ambiente.VariazioneValoriParametriAmbienteDTO;
 import com.agriflux.agrifluxshared.dto.azienda.AziendaDTO;
+import com.agriflux.agrifluxshared.dto.coltura.ColturaConsumoIdricoDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.dto.fatturato.FatturatoDTO;
@@ -86,6 +87,14 @@ public class DashboardServiceController implements DashboardService {
 		return dashboardServiceImpl.findPrezziAndDateRaccoltoColtura();
 	}
 	
+	@Override
+	@GetMapping("/getColturaConsumoIdricoApi")
+	@Operation(summary = "Mostra la lista relativa al consumo idrico per singola Coltura", description = "Restituisce una lista di DTo contenenti l'id della Coltura, la data di raccolto, il nome dell'Ortaggio, il consumo idrico di quella produzione e"
+			+ " il consumo idrico medio relativo a quell'ortaggio")
+	public List<ColturaConsumoIdricoDTO> findColturaConsumoIdrico() {
+		return dashboardServiceImpl.findColturaConsumoIdrico();
+	}
+	
 	//RILEVAZIONE TERRENO
 	
 	@Override
@@ -138,14 +147,14 @@ public class DashboardServiceController implements DashboardService {
 	}
 
 	@Override
-	@GetMapping("/findListaParametriAmbientali")
+	@GetMapping("/findListaParametriAmbientaliApi")
 	@Operation(summary = "Recupera la lista dei parametri Ambientali", description = "Restituisce la lista dei nomi dei parametri Ambientali calcolati")
 	public List<String> getListaParametriAmbiente() {
 		return dashboardServiceImpl.getListaParametriAmbiente();
 	}
 
 	@Override
-	@GetMapping("/findVariazioneValoriParametriAmbiente")
+	@GetMapping("/findVariazioneValoriParametriAmbienteApi")
 	@Operation(summary = "Mostra una mappa con la variazione dei parametri ambientali nel corso del tempo", description = "Restituisce una mappa con in chiave il nome del parametro ambientale e come valore"
 			+ " una lista di oggetti contenenti il valore del parametro, la data di rilevazione ambientale e la variazione percentuale rispetto all'anno precedente")
 	public Map<String, List<VariazioneValoriParametriAmbienteDTO>> getVariazioneValoriParametriAmbiente() {
@@ -169,7 +178,7 @@ public class DashboardServiceController implements DashboardService {
 	}
 
 	@Override
-	@GetMapping("/getFatturatoRicaviSpese")
+	@GetMapping("/getFatturatoRicaviSpeseApi")
 	@Operation(summary = "Mostra una mappa dei dati relativi al Fatturato di ogni Particella anno per anno", description = "Restituisce una mappa con in chiave l'id della Particella "
 			+ "e come valore una lista di oggetti contenenti l'anno di riferimento del fatturato, i ricavi e i costi di spesa della particella")
 	public Map<Long, List<FatturatoRicaviSpeseDTO>> findFatturatoRicaviSpese() {

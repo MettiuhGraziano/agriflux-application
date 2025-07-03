@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.agriflux.agrifluxshared.dto.coltura.ColturaConsumoIdricoDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.service.coltura.DatiColturaService;
@@ -82,6 +83,21 @@ public class DatiColturaClientServiceImpl implements DatiColturaService{
 
 		ResponseEntity<Map<String, ColturaListPrezzoDataRaccoltoDTO>> response = restTemplate.exchange(url, HttpMethod.GET, httpHentity,
 				new ParameterizedTypeReference<Map<String, ColturaListPrezzoDataRaccoltoDTO>>() {
+				});
+
+		return response.getBody();
+	}
+
+	@Override
+	public List<ColturaConsumoIdricoDTO> findColturaConsumoIdrico() {
+		String url = batchUrl + "/findColturaConsumoIdrico";
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setAccept(List.of(MediaType.APPLICATION_JSON));
+		HttpEntity<Void> httpHentity = new HttpEntity<>(httpHeaders);
+
+		ResponseEntity<List<ColturaConsumoIdricoDTO>> response = restTemplate.exchange(url, HttpMethod.GET, httpHentity,
+				new ParameterizedTypeReference<List<ColturaConsumoIdricoDTO>>() {
 				});
 
 		return response.getBody();

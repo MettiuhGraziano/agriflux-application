@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.agriflux.agrifluxshared.dto.coltura.ColturaConsumoIdricoDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.service.coltura.DatiColturaService;
@@ -41,6 +42,12 @@ public class DatiColturaController implements DatiColturaService {
 	@GetMapping("/findPrezziAndDateRaccoltoColtura")
 	public Map<String, ColturaListPrezzoDataRaccoltoDTO> findPrezziAndDateColtura() {
 		return datiColturaService.findPrezziAndDateColtura();
+	}
+
+	@Override
+	@GetMapping("/findColturaConsumoIdrico")
+	public List<ColturaConsumoIdricoDTO> findColturaConsumoIdrico() {
+		return datiColturaService.findColturaConsumoIdrico();
 	}
 
 }

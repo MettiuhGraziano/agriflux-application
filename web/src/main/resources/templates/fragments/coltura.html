@@ -114,6 +114,36 @@
 			</div>
 		</div>
 		
+		<div class="card mb-3">
+			<div class="card-body">
+				<div class="card-header d-flex justify-content-between align-items-center" type="button"
+					data-bs-toggle="collapse" data-bs-target="#collapseColturaLineBarChart" aria-expanded="false"
+					aria-controls="collapseColturaLineBarChart">
+					<span><i class="fa-solid fa-square-poll-vertical me-2"></i>Andamento Consumo Idrico</span>
+					<div class="btn" data-bs-toggle="tooltip" data-bs-placement="left"
+						title="Grafico dell'andamento del consumo idrico relativo alle singole Colture confrontato con il consumo idrico 
+						medio dell'ortaggio di riferimento (clickare su un pointer per evidenziare la coltura di riferimento)">
+						<i class="fa-solid fa-question"></i>
+					</div>
+				</div>
+				<div class="collapse" id="collapseColturaLineBarChart">
+		
+					<div class="row align-items-center">
+						<div id="coltura-chart-container4" class="chart-container col-auto p-2 mx-auto border rounded">
+							<canvas id="colturaLineBarChart"></canvas>
+						</div>
+					</div>
+		
+					<div class="d-flex justify-content-start mt-2 mb-3">
+						<button id="downloadColturaLineBarChart" class="btn btn-outline-success">
+							<i class="fa-solid fa-download"></i> Scarica PDF
+						</button>
+					</div>
+		
+				</div>
+			</div>
+		</div>
+		
 	</div>
 	
 </body>

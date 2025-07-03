@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.agriflux.agrifluxshared.dto.ambiente.AmbienteDTO;
 import com.agriflux.agrifluxshared.dto.ambiente.VariazioneValoriParametriAmbienteDTO;
 import com.agriflux.agrifluxshared.dto.azienda.AziendaDTO;
+import com.agriflux.agrifluxshared.dto.coltura.ColturaConsumoIdricoDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.dto.fatturato.FatturatoDTO;
@@ -88,6 +89,11 @@ public class DashboardServiceImpl implements DashboardService {
 	@Override
 	public Map<String, ColturaListPrezzoDataRaccoltoDTO> findPrezziAndDateRaccoltoColtura() {
 		return datiColturaService.findPrezziAndDateColtura();
+	}
+	
+	@Override
+	public List<ColturaConsumoIdricoDTO> findColturaConsumoIdrico() {
+		return datiColturaService.findColturaConsumoIdrico();
 	}
 	
 	//RILEVAZIONE TERRENO

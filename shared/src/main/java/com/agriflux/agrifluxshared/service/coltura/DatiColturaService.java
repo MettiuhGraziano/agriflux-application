@@ -3,6 +3,7 @@ package com.agriflux.agrifluxshared.service.coltura;
 import java.util.List;
 import java.util.Map;
 
+import com.agriflux.agrifluxshared.dto.coltura.ColturaConsumoIdricoDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 
@@ -38,4 +39,13 @@ public interface DatiColturaService {
 	 * @return Map di ColturaListPrezzoDataRaccoltoDTO
 	 */
 	Map<String, ColturaListPrezzoDataRaccoltoDTO> findPrezziAndDateColtura();
+	
+	/**
+	 * Metodo che restituisce una lista di oggetti contenenti l'id della coltura, 
+	 * il nome dell'ortaggio coltivato, la data raccolto, il consumo idrico per quella produzione ed 
+	 * il consumo idrico medio per quell'ortaggio
+	 * 
+	 * @return List di ColturaConsumoIdricoDTO
+	 */
+	List<ColturaConsumoIdricoDTO> findColturaConsumoIdrico();
 }

@@ -3,9 +3,11 @@ package com.agriflux.agrifluxbatch.service.coltura;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
@@ -13,9 +15,11 @@ import org.springframework.stereotype.Service;
 
 import com.agriflux.agrifluxbatch.entity.Coltura;
 import com.agriflux.agrifluxbatch.repository.DatiColturaRepository;
+import com.agriflux.agrifluxbatch.repository.projection.coltura.ColturaConsumoIdricoProjection;
 import com.agriflux.agrifluxbatch.repository.projection.coltura.ColturaFamigliaOrtaggioProjection;
 import com.agriflux.agrifluxbatch.repository.projection.coltura.ColturaNomeOrtaggioProjection;
 import com.agriflux.agrifluxbatch.repository.projection.coltura.ColturaProdottoPrezzoDataProjection;
+import com.agriflux.agrifluxshared.dto.coltura.ColturaConsumoIdricoDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.service.coltura.DatiColturaService;
@@ -114,6 +118,26 @@ public class DatiColturaServiceImpl implements DatiColturaService {
 		}
 
 		return colturaPrezzoDataMap;
+	}
+
+	@Override
+	public List<ColturaConsumoIdricoDTO> findColturaConsumoIdrico() {
+		
+		List<ColturaConsumoIdricoDTO> response = new ArrayList<ColturaConsumoIdricoDTO>();
+		
+		List<ColturaConsumoIdricoProjection> projectionList = datiColturaRepository.findColturaConsumoIdricoProjection();
+		
+		List<ColturaConsumoIdricoProjection> projectionListSorted = projectionList.stream()
+				.sorted(Comparator.comparing(ColturaConsumoIdricoProjection::getDataRaccolto, Comparator.nullsLast(Comparator.naturalOrder())))
+				.collect(Collectors.toList());
+		
+		for (ColturaConsumoIdricoProjection projection : projectionListSorted) {
+			response.add(new ColturaConsumoIdricoDTO(projection.getIdColtura(), projection.getDataRaccolto(),
+					projection.getNome(), projection.getConsumoIdrico(),
+					projection.getConsumoIdricoMedio().multiply(projection.getEstensione())));
+		}
+		
+		return response;
 	}
 
 }

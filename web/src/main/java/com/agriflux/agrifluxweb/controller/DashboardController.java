@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.agriflux.agrifluxshared.dto.ambiente.VariazioneValoriParametriAmbienteDTO;
+import com.agriflux.agrifluxshared.dto.coltura.ColturaConsumoIdricoDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.dto.fatturato.FatturatoRicaviSpeseDTO;
@@ -105,6 +106,13 @@ public class DashboardController implements DataChartService {
 	@ResponseBody
 	public Map<String, ColturaListPrezzoDataRaccoltoDTO> findPrezziAndDateRaccoltoColtura() {
 		return dashboardServiceImpl.findPrezziAndDateRaccoltoColtura();
+	}
+	
+	@Override
+	@GetMapping("/findColturaConsumoIdrico")
+	@ResponseBody
+	public List<ColturaConsumoIdricoDTO> findColturaConsumoIdrico() {
+		return dashboardServiceImpl.findColturaConsumoIdrico();
 	}
 	
 	//PARTICELLA

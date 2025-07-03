@@ -121,6 +121,13 @@ function ambienteLineChartDinamico(ambienteLineChartInstance) {
 												const value = context.raw.y;
 												const variazionePercentuale = context.raw.variazione;
 												
+												var messaggioVariazionePositiva;
+												if(variazionePercentuale > 0) {
+													messaggioVariazionePositiva = `Variazione rispetto all'anno precedente: +${variazionePercentuale} %`
+												} else {
+													messaggioVariazionePositiva = `Variazione rispetto all'anno precedente: ${variazionePercentuale} %`
+												}
+												
 												var unitaMisura;
 												if (parametroSelezionato == 'TEMPERATURA') {
 													unitaMisura = '°C';
@@ -137,7 +144,7 @@ function ambienteLineChartDinamico(ambienteLineChartInstance) {
 												return [
 													`Data rilevazione: ${dataRilevazione}`,
 													`Valore: ${value} ${unitaMisura}`,
-													`Variazione rispetto all'anno precedente: ${variazionePercentuale} %`
+													messaggioVariazionePositiva
 												];
 											}
 										}

@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,6 +32,9 @@ public class Coltura {
 	@ManyToOne
     @JoinColumn(name = "ID_ORTAGGIO")
 	private Ortaggio ortaggio;
+	
+	@OneToOne(optional=false, mappedBy="coltura")
+    public Produzione produzione;
 	
 	public long getIdColtura() {
 		return idColtura;
@@ -78,6 +82,14 @@ public class Coltura {
 
 	public void setOrtaggio(Ortaggio ortaggio) {
 		this.ortaggio = ortaggio;
+	}
+	
+	public Produzione getProduzione() {
+		return produzione;
+	}
+
+	public void setProduzione(Produzione produzione) {
+		this.produzione = produzione;
 	}
 	
 }

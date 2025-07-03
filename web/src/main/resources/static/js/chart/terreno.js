@@ -194,13 +194,10 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 										}
 									}
 								},
-								// *** INTEGRAZIONE PLUGIN ZOOM/PAN ***							
+								//INTEGRAZIONE PLUGIN ZOOM/PAN							
 								zoom: {
 									zoom: {
 										wheel: {
-											enabled: true
-										},
-										pinch: {
 											enabled: true
 										},
 										mode: 'x',

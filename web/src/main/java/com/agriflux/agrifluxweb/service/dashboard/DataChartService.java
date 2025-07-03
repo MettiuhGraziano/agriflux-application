@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.agriflux.agrifluxshared.dto.ambiente.VariazioneValoriParametriAmbienteDTO;
+import com.agriflux.agrifluxshared.dto.coltura.ColturaConsumoIdricoDTO;
 import com.agriflux.agrifluxshared.dto.coltura.ColturaListPrezzoDataRaccoltoDTO;
 import com.agriflux.agrifluxshared.dto.fatturato.FatturatoRicaviSpeseDTO;
 import com.agriflux.agrifluxshared.dto.produzione.ProduzioneColturaDTO;
@@ -40,6 +41,15 @@ public interface DataChartService {
 	 * @return Map di ColturaListPrezzoDataRaccoltoDTO
 	 */
 	Map<String, ColturaListPrezzoDataRaccoltoDTO> findPrezziAndDateRaccoltoColtura();
+	
+	/**
+	 * Metodo che restituisce una lista di oggetti contenenti l'id della coltura, 
+	 * il nome dell'ortaggio coltivato, la data raccolto, il consumo idrico per quella produzione ed 
+	 * il consumo idrico medio per quell'ortaggio
+	 * 
+	 * @return List di ColturaConsumoIdricoDTO
+	 */
+	List<ColturaConsumoIdricoDTO> findColturaConsumoIdrico();
 	
 	/**
 	 * Metodo che restituisce una mappa con in chiave l'id della particella e come valore una lista di oggetti
