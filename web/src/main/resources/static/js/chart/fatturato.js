@@ -31,6 +31,7 @@ document.getElementById('fatturato-tab').addEventListener('click', function() {
 			collapseMultilineChartTerreno.addEventListener('shown.bs.collapse', function() {
 				if (!multilineFatturatoChartInstance) {
 					multilineFatturatoChart(multilineFatturatoChartInstance);
+					downloadFatturatoLineChart();
 				}
 			});
 			
@@ -128,4 +129,27 @@ function multilineFatturatoChart(multilineFatturatoChartInstance) {
 				});
 			});
 		});
+}
+
+function downloadFatturatoLineChart() {
+	document.getElementById("downloadFatturatoLineChart").addEventListener("click", async () => {
+		const { jsPDF } = window.jspdf;
+
+		const pdf = new jsPDF({
+			orientation: 'landscape',
+			unit: 'px',
+			format: 'a4'
+		});
+
+		const canvas = document.getElementById("fatturatoMultilineChart");
+		const imageData = canvas.toDataURL("image/png", 1.0);
+
+		const width = pdf.internal.pageSize.getWidth();
+		const height = canvas.height * (width / canvas.width);
+
+		pdf.text("Andamento Prezzo Ricavi/Spese", 40, 30);
+		pdf.addImage(imageData, 'PNG', 40, 50, width - 80, height);
+
+		pdf.save("andamento_ricavi_spese.pdf");
+	});
 }

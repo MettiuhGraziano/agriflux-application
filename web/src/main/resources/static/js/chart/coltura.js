@@ -58,7 +58,7 @@ document.getElementById('colture-tab').addEventListener('click', function() {
 			collapseColturaLineBarChart.addEventListener('shown.bs.collapse', function() {
 				if (!colturaLineBarChartInstance) {
 					colturaLineBarChart(colturaLineBarChartInstance);
-					//downloadColturaLineChart();
+					downloadColturaLineBarChart();
 				}
 			});
 			
@@ -219,160 +219,181 @@ function colturaLineBarChart(colturaLineBarChartInstance) {
 	fetch("/findColturaConsumoIdrico")
 		.then(res => res.json())
 		.then(colturaData => {
-			
-			const dateMin = colturaData[0].dataRaccolto;
-			const dateMax = colturaData[colturaData.length - 1].dataRaccolto;
-				
-			const ortaggi = [];
-			const consumiIdriciMedi = [];
-			const dateRaccolto = [];
-			const lineChartData = [];
 
-			colturaData.forEach(coltura => {
-				if (!ortaggi.includes(coltura.nome)) {
-					ortaggi.push(coltura.nome);
-					consumiIdriciMedi.push(coltura.consumoIdricoMedio);
+			const annoRiferimentoColturaSelect = document.getElementById("annoRiferimentoColturaSelect");
+			const annoRiferimentoCounter = [];
+			const annoDtoMap = new Map();
+			
+			colturaData.forEach(colturaData => {
+				const annoRiferimento = new Date(colturaData.dataRaccolto).getFullYear().toString();
+				if (!annoRiferimentoCounter.includes(annoRiferimento)) {
+					const option = document.createElement("option");
+					option.value = annoRiferimento;
+					option.textContent = annoRiferimento;
+					annoRiferimentoColturaSelect.appendChild(option);
+					annoRiferimentoCounter.push(annoRiferimento);
+
+				}
+				if (!annoDtoMap.has(annoRiferimento)) {
+					annoDtoMap.set(annoRiferimento, []);
 				}
 
-				lineChartData.push({
-					x: coltura.dataRaccolto,
-					y: coltura.consumoIdrico,
-					ortaggio: coltura.nome,
-					idColtura: coltura.idColtura
+				annoDtoMap.get(annoRiferimento).push(colturaData);
+			});
+
+			annoRiferimentoColturaSelect.addEventListener("change", function() {
+				const annoSelezionato = this.value;
+				const dtoList = annoDtoMap.get(annoSelezionato);
+
+				const dateMin = dtoList[0].dataRaccolto;
+				const dateMax = dtoList[dtoList.length - 1].dataRaccolto;
+
+				const ortaggi = [];
+				const consumiIdriciMedi = [];
+				const dateRaccolto = [];
+				const lineChartData = [];
+
+				dtoList.forEach(coltura => {
+					if (!ortaggi.includes(coltura.nome)) {
+						ortaggi.push(coltura.nome);
+						consumiIdriciMedi.push(coltura.consumoIdricoMedio);
+					}
+
+					lineChartData.push({
+						x: coltura.dataRaccolto,
+						y: coltura.consumoIdrico,
+						ortaggio: coltura.nome,
+						idColtura: coltura.idColtura
+					});
+
+					dateRaccolto.push(coltura.dataRaccolto);
 				});
 
-				dateRaccolto.push(coltura.dataRaccolto);
-			});
-			
-			const ctxLineBar = document.getElementById("colturaLineBarChart").getContext("2d");
+				const ctxLineBar = document.getElementById("colturaLineBarChart").getContext("2d");
 
-			if (colturaLineBarChartInstance) {
-				colturaLineBarChartInstance.destroy();
-			}
-			
-			colturaLineBarChartInstance = new Chart(ctxLineBar, {
-				type: 'bar',
-				data: {
-					datasets: [{
-						label: `Consumo Idrico Medio`,
-						data: consumiIdriciMedi,
-						fill: false,
-						backgroundColor: "rgb(0, 206, 209, 0.6)",
-						borderColor: "rgb(0, 206, 209)",
-						borderWidth: 2,
-						yAxisID: 'y',
-						xAxisID: 'x-ortaggi',
-						order: 1
-					}, {
-						label: `Consumo Idrico`,
-						data: lineChartData,
-						type: 'line',
-						fill: false,
-						borderColor: "rgb(0, 0, 128)",
-						pointRadius: 3,
-						pointBackgroundColor: "rgb(0, 0, 128)",
-						yAxisID: 'y',
-						xAxisID: 'x-date',
-						order: 0
-					}]
-				},
-				options: {
-					responsive: true,
-					maintainAspectRatio: false,
-					scales: {
-						y: {
-							beginAtZero: false,
-							title: { display: true, text: 'Consumo Idrico' }
-						}, 
-						'x-ortaggi': {
-							beginAtZero: false,
-							title: { display: true, text: 'Ortaggi' },
-							labels: ortaggi,
-							grid: {
-								drawOnChartArea: false
-							}
-						},
-						'x-date': {
-							id: 'x-date',
-							type: 'time',
-							position: 'top',
-							title: {
-								display: true,
-								text: 'Data Raccolto'
+				if (colturaLineBarChartInstance) {
+					colturaLineBarChartInstance.destroy();
+				}
+
+				colturaLineBarChartInstance = new Chart(ctxLineBar, {
+					type: 'bar',
+					data: {
+						datasets: [{
+							label: `Consumo Idrico Medio`,
+							data: consumiIdriciMedi,
+							fill: false,
+							backgroundColor: "rgb(0, 206, 209, 0.6)",
+							borderColor: "rgb(0, 206, 209)",
+							borderWidth: 2,
+							yAxisID: 'y',
+							xAxisID: 'x-ortaggi',
+							order: 1
+						}, {
+							label: `Consumo Idrico`,
+							data: lineChartData,
+							type: 'line',
+							fill: false,
+							borderColor: "rgb(0, 0, 128)",
+							pointBackgroundColor: "rgb(0, 0, 128)",
+							pointRadius: 3,
+							yAxisID: 'y',
+							xAxisID: 'x-date',
+							order: 0
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							y: {
+								beginAtZero: false,
+								title: { display: true, text: 'Consumo Idrico' }
 							},
-							time: {
-								unit: 'day',
-								tooltipFormat: 'yyyy-MM-dd',
-								displayFormats: {
-									day: 'yyyy-MM-dd',
-									month: 'MMM',
-									year: 'yyyy'
+							'x-ortaggi': {
+								beginAtZero: false,
+								title: { display: true, text: 'Ortaggi' },
+								labels: ortaggi,
+								grid: {
+									drawOnChartArea: false
 								}
 							},
-							min: dateMin,
-							max: dateMax,
-							grid: {
-								drawOnChartArea: true
-							}
-						}
-					}, plugins: {
-						tooltip: {
-							callbacks: {
-								label: function(context) {
-									console.log(context);
-									let label = context.dataset.label || '';
-
-									if (label) {
-										label += ': ';
+							'x-date': {
+								id: 'x-date',
+								type: 'time',
+								position: 'top',
+								title: {
+									display: true,
+									text: 'Data Raccolto'
+								},
+								time: {
+									unit: 'day',
+									tooltipFormat: 'yyyy-MM-dd',
+									displayFormats: {
+										day: 'yyyy-MM-dd',
+										month: 'MMM',
+										year: 'yyyy'
 									}
-
-									//Dataset Bar (Consumo Idrico Medio)
-									if (context.datasetIndex === 0) {
-										return [
-											`Ortaggio: ${context.label}`,
-											`${label} ${context.formattedValue} m³`
-										];
-										//Dataset Line (Andamento Consumo Idrico)
-									} else if (context.datasetIndex === 1) {
-										const rawData = context.raw;
-										return [
-											`Coltura: #${rawData.idColtura}`,
-											`Ortaggio: ${rawData.ortaggio}`,
-											`Data Raccolto: ${context.label}`,
-											`${label} ${context.formattedValue} m³`
-										];
-									}
-									return label;
+								},
+								min: dateMin,
+								max: dateMax,
+								grid: {
+									drawOnChartArea: true
 								}
 							}
-						}
-					}, onClick: (e, elements) => {
-						//Se è un punto del line chart cliccato
-						if (elements.length > 0 && elements[0].datasetIndex === 1) {
-							const elementoClickato = elements[0];
-							const dataIndex = elementoClickato.index;
-							const ortaggioClickato = lineChartData[dataIndex].ortaggio;
+						}, plugins: {
+							tooltip: {
+								callbacks: {
+									label: function(context) {
+										let label = context.dataset.label || '';
 
-							// Trova l'indice del bar chart corrispondente all'ortaggio cliccato
-							const barChartOrtaggioIndex = ortaggi.indexOf(ortaggioClickato);
+										//Dataset Bar (Consumo Idrico Medio)
+										if (context.datasetIndex === 0) {
+											return [
+												`Ortaggio: ${context.label}`,
+												`${label}: ${context.formattedValue} m³`
+											];
+											//Dataset Line (Andamento Consumo Idrico)
+										} else if (context.datasetIndex === 1) {
+											const rawData = context.raw;
+											return [
+												`Coltura: #${rawData.idColtura}`,
+												`Ortaggio: ${rawData.ortaggio}`,
+												`Data Raccolto: ${context.label}`,
+												`${label}: ${context.formattedValue} m³`
+											];
+										}
+										return label;
+									}
+								}
+							}
+						}, onClick: (e, elements) => {
+							//Se è un punto del line chart cliccato
+							if (elements.length > 0 && elements[0].datasetIndex === 1) {
+								const elementoClickato = elements[0];
+								const dataIndex = elementoClickato.index;
+								const ortaggioClickato = lineChartData[dataIndex].ortaggio;
 
-							if (barChartOrtaggioIndex !== -1) {
-								//Resetta lo stile di tutte le barre
-								colturaLineBarChartInstance.data.datasets[0].backgroundColor = ortaggi.map(() => "rgba(0, 206, 209, 0.6)");
-								colturaLineBarChartInstance.data.datasets[0].borderColor = ortaggi.map(() => "rgb(0, 206, 209)");
-								colturaLineBarChartInstance.data.datasets[0].borderWidth = 1;
+								// Trova l'indice del bar chart corrispondente all'ortaggio cliccato
+								const barChartOrtaggioIndex = ortaggi.indexOf(ortaggioClickato);
 
-								//Evidenzia la barra corrispondente
-								colturaLineBarChartInstance.data.datasets[0].backgroundColor[barChartOrtaggioIndex] = "rgba(255, 99, 132, 0.8)";
-								colturaLineBarChartInstance.data.datasets[0].borderColor[barChartOrtaggioIndex] = "rgb(255, 99, 132)";
-								colturaLineBarChartInstance.data.datasets[0].borderWidth[barChartOrtaggioIndex] = 3;
+								if (barChartOrtaggioIndex !== -1) {
+									//Resetta lo stile di tutte le barre
+									colturaLineBarChartInstance.data.datasets[0].backgroundColor = ortaggi.map(() => "rgba(0, 206, 209, 0.6)");
+									colturaLineBarChartInstance.data.datasets[0].borderColor = ortaggi.map(() => "rgb(0, 206, 209)");
+									colturaLineBarChartInstance.data.datasets[0].borderWidth = 1;
 
-								//Aggiorna il grafico per mostrare l'evidenziazione
-								colturaLineBarChartInstance.update();
+									//Evidenzia la barra corrispondente
+									colturaLineBarChartInstance.data.datasets[0].backgroundColor[barChartOrtaggioIndex] = "rgba(255, 99, 132, 0.8)";
+									colturaLineBarChartInstance.data.datasets[0].borderColor[barChartOrtaggioIndex] = "rgb(255, 99, 132)";
+									colturaLineBarChartInstance.data.datasets[0].borderWidth[barChartOrtaggioIndex] = 3;
+
+									//Aggiorna il grafico per mostrare l'evidenziazione
+									colturaLineBarChartInstance.update();
+								}
 							}
 						}
 					}
-				}
+				});
 			});
 		});
 }
@@ -430,5 +451,28 @@ function downloadStoricoColtivazioniChart() {
 		pdf.addImage(imageData2, 'PNG', 40, 50, width2 - 80, height2);
 
 		pdf.save("storico_colture.pdf");
+	});
+}
+
+function downloadColturaLineBarChart() {
+	document.getElementById("downloadColturaLineBarChart").addEventListener("click", async () => {
+		const { jsPDF } = window.jspdf;
+
+		const pdf = new jsPDF({
+			orientation: 'landscape',
+			unit: 'px',
+			format: 'a4'
+		});
+
+		const canvas = document.getElementById("colturaLineBarChart");
+		const imageData = canvas.toDataURL("image/png", 1.0);
+
+		const width = pdf.internal.pageSize.getWidth();
+		const height = canvas.height * (width / canvas.width);
+
+		pdf.text("Andamento Consumo Idrico Annuale", 40, 30);
+		pdf.addImage(imageData, 'PNG', 40, 50, width - 80, height);
+
+		pdf.save("andamento_consumo_idrico_colture.pdf");
 	});
 }

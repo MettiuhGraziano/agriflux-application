@@ -43,12 +43,10 @@ document.getElementById("batchButton").addEventListener("click", async () => {
 	const progressBar = document.getElementById("batchProgressBar");
 	let progress = 0;
 
-	// Reset barra
 	progressBar.style.width = "0%";
 	progressBar.innerText = "0%";
 	progressBar.classList.remove("bg-success");
 
-	// Animazione fittizia durante il processo
 	const progressAnimation = setInterval(() => {
 		if (progress < 90) {
 			progress += Math.floor(Math.random() * 5) + 1;
@@ -58,7 +56,6 @@ document.getElementById("batchButton").addEventListener("click", async () => {
 		}
 	}, 300);
 
-	// Avvia il batch (e aspetta la fine)
 	const response = await fetch("/startSimulationJob", { method: "POST" });
 	
 	if (response.ok) {
@@ -77,7 +74,6 @@ document.getElementById("batchButton").addEventListener("click", async () => {
 			}
 		}, 50);
 		
-		//ABILITO I PULSANTI DELLA BARRA DI NAVIGAZIONE E DISABILITO IL PULSANTE DI SIMULAZIONE
 		document.getElementById("colture-tab").disabled = false;
 		document.getElementById("produzione-tab").disabled = false;
 		document.getElementById("terreno-tab").disabled = false;
