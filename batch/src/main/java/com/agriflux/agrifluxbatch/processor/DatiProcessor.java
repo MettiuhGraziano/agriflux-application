@@ -38,10 +38,12 @@ public class DatiProcessor {
 	
 	private static final Random random = new Random();
 	
-	protected static final Map<Long, OrtaggioRangeStagioneSumDTO> cacheOrtaggio = new HashMap<Long, OrtaggioRangeStagioneSumDTO>();
-	protected static final Map<Long, DatiParticellaDTO> cacheParticella = new HashMap<Long, DatiParticellaDTO>();
-	protected static Map<Long, List<Map<Integer, ProduzioneJoinColturaFatturatoDTO>>> cacheParticellaProduzione = new HashMap<Long, List<Map<Integer, ProduzioneJoinColturaFatturatoDTO>>>();
-	protected static Map<Long, List<Map<Integer, BigDecimal>>> cacheDatiEconomiciOrtaggio = new HashMap<Long, List<Map<Integer, BigDecimal>>>();
+	// Changed to public for test access from different packages
+	// Removed final to allow reassignment by processors, though this is not ideal design
+	public static Map<Long, OrtaggioRangeStagioneSumDTO> cacheOrtaggio = new HashMap<Long, OrtaggioRangeStagioneSumDTO>();
+	public static Map<Long, DatiParticellaDTO> cacheParticella = new HashMap<Long, DatiParticellaDTO>();
+	public static Map<Long, List<Map<Integer, ProduzioneJoinColturaFatturatoDTO>>> cacheParticellaProduzione = new HashMap<Long, List<Map<Integer, ProduzioneJoinColturaFatturatoDTO>>>();
+	public static Map<Long, List<Map<Integer, BigDecimal>>> cacheDatiEconomiciOrtaggio = new HashMap<Long, List<Map<Integer, BigDecimal>>>();
 	
 	protected static BigDecimal generaRandomBigDecimalFromRange(String range) {
 
