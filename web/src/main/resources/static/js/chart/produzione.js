@@ -1,3 +1,23 @@
+/**
+ * @file produzione.js
+ * @description Questo script gestisce la scheda "Produzione" nell'applicazione.
+ * Recupera e visualizza vari aspetti dei dati di produzione agricola utilizzando DataTables
+ * e diversi tipi di grafici (linee multiple, radar, a dispersione, a barre orizzontali).
+ *
+ * Operazioni:
+ * - Recupera il contenuto HTML iniziale per la scheda di produzione.
+ * - Inizializza un DataTable per visualizzare i dati tabellari di produzione.
+ * - Genera un grafico a linee multiple per visualizzare le quantità di un prodotto selezionato
+ * (raccolto, venduto, marcio, altri usi) su diversi anni di riferimento.
+ * - Crea un grafico radar per visualizzare il ricavo annuale per il prodotto selezionato.
+ * - Implementa un grafico a dispersione per mostrare la distribuzione della produzione del raccolto nel tempo,
+ * filtrabile per data. Cliccando su un punto dati si aggiorna una tabella di dettaglio.
+ * - Genera un grafico a barre orizzontali che illustra la durata media delle diverse
+ * fasi di coltivazione (semina, germinazione, ecc.) per vari prodotti in un anno selezionato.
+ * - Fornisce la funzionalità per scaricare i grafici generati come PDF.
+ * - Include una funzione di utilità per generare colori casuali per gli elementi del grafico.
+ */
+
 let produzioneLoaded = false;
 
 document.getElementById('produzione-tab').addEventListener('click', function() {

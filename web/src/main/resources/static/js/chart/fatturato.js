@@ -1,3 +1,20 @@
+/**
+ * @file fatturato.js
+ * @description Questo script gestisce la scheda "Fatturato" nell'applicazione.
+ * Recupera e visualizza dati relativi al fatturato, incluso un grafico multi-linea
+ * che confronta ricavi e spese per le parcelle di terreno selezionate nel tempo.
+ *
+ * Operazioni:
+ * - Recupera il contenuto HTML iniziale per la scheda fatturato.
+ * - Inizializza un DataTable per visualizzare i dati tabulari del fatturato.
+ * - Popola una datalist con le parcelle di terreno ("terreni") disponibili.
+ * - Genera dinamicamente un grafico multi-linea alla selezione dell'utente di una parcella di terreno
+ * e un'azione di ricerca.
+ * - Il grafico multi-linea visualizza l'andamento dei "Ricavi" e delle "Spese"
+ * nel tempo per la parcella di terreno scelta.
+ * - Fornisce la funzionalità per scaricare il grafico multi-linea generato come PDF.
+ */
+
 let fatturatoLoaded = false;
 
 document.getElementById('fatturato-tab').addEventListener('click', function() {

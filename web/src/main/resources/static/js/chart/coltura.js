@@ -1,3 +1,21 @@
+/**
+ * @file coltura.js
+ * @description Questo script gestisce la scheda "Colture" nell'applicazione.
+ * Recupera e visualizza dati relativi a varie colture, utilizzando DataTables e
+ * diversi tipi di grafici (linea, a barre, a torta, linea/barre combinato) per la visualizzazione.
+ *
+ * Operazioni:
+ * - Recupera il contenuto HTML iniziale per la scheda delle colture.
+ * - Inizializza un DataTable per visualizzare i dati tabellari delle colture.
+ * - Genera dinamicamente un grafico a linee per mostrare l'andamento del prezzo di una coltura selezionata nel tempo.
+ * - Crea un grafico a barre che illustra il conteggio totale dei diversi tipi di ortaggi coltivati.
+ * - Genera un grafico a torta che rappresenta la distribuzione delle famiglie di colture.
+ * - Implementa un grafico combinato a linee e a barre per visualizzare il consumo medio vs effettivo di acqua
+ * per diverse colture in un anno selezionato, con evidenziazione interattiva.
+ * - Fornisce la funzionalità per scaricare i grafici generati come PDF.
+ * - Include una funzione di utilità per generare colori casuali per gli elementi del grafico.
+ */
+
 let coltureLoaded = false;
 
 document.getElementById('colture-tab').addEventListener('click', function() {

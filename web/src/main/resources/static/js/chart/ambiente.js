@@ -1,3 +1,19 @@
+/**
+ * @file ambiente.js
+ * @description Questo script gestisce la scheda "Ambiente" nell'applicazione.
+ * Recupera e visualizza dati ambientali, incluso un grafico a linee dinamico
+ * che mostra l'andamento di vari parametri ambientali.
+ *
+ * Operazioni:
+ * - Recupera il contenuto HTML iniziale per la scheda ambiente.
+ * - Inizializza un DataTable per visualizzare i dati ambientali tabulari.
+ * - Recupera un elenco di parametri ambientali disponibili per popolare un menu a tendina.
+ * - Genera e aggiorna dinamicamente un grafico a linee basato sul parametro selezionato.
+ * - Il grafico a linee mostra l'andamento del parametro selezionato nel tempo,
+ * con tooltip che mostrano valori specifici, date e variazioni percentuali.
+ * - Fornisce la funzionalità per scaricare il grafico a linee generato come PDF.
+ */
+
 let ambienteLoaded = false;
 
 document.getElementById('ambiente-tab').addEventListener('click', function() {

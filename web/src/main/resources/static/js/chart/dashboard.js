@@ -1,3 +1,22 @@
+/**
+ * @file dashboard.js
+ * @description Questo script gestisce la funzionalità principale della dashboard/homepage.
+ * Si occupa del caricamento del contenuto della homepage e gestisce un processo di simulazione batch,
+ * inclusi gli aggiornamenti dell'interfaccia utente per lo stato di avanzamento e l'abilitazione delle schede
+ * in base allo stato del job.
+ *
+ * Operazioni:
+ * - Carica il contenuto iniziale della homepage quando la scheda corrispondente viene attivata.
+ * - Controlla periodicamente se un job di simulazione in background è stato eseguito.
+ * - In base allo stato del job:
+ * - Abilita/disabilita le schede di navigazione (Colture, Produzione, Terreno, Ambiente, Fatturato).
+ * - Aggiorna una barra di avanzamento per riflettere lo stato di esecuzione del job (0-100%).
+ * - Gestisce lo stato (abilitato/disabilitato) di un pulsante "Avvia Simulazione".
+ * - Avvia il job di simulazione quando viene cliccato il pulsante "Avvia Simulazione".
+ * - Fornisce un feedback visivo per l'avanzamento della simulazione tramite una barra di avanzamento animata.
+ * - Mostra un avviso se il job di simulazione incontra un errore.
+ */
+
 let dashboardLoaded = false;
 
 document.addEventListener('DOMContentLoaded', function() {

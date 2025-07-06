@@ -1,3 +1,23 @@
+/**
+ * @file terreno.js
+ * @description Questo script gestisce la scheda "Terreno" nell'applicazione.
+ * Recupera e visualizza dati relativi alle parcelle di terreno e alla loro storia di coltivazione,
+ * utilizzando principalmente DataTables e un grafico a barre orizzontali dinamico per la rotazione delle colture.
+ *
+ * Operazioni:
+ * - Recupera il contenuto HTML iniziale per la scheda terreno.
+ * - Inizializza due DataTables: uno per i dettagli delle parcelle di terreno e un altro per
+ * i dati del rilievo morfologico.
+ * - Popola una datalist con le parcelle di terreno disponibili.
+ * - Genera dinamicamente un grafico a barre orizzontali per visualizzare la storia di rotazione delle colture
+ * per una parcella di terreno selezionata.
+ * - Il grafico a barre mostra i periodi di coltivazione per diverse colture sulla parcella scelta nel tempo.
+ * - L'altezza del grafico viene regolata dinamicamente in base al numero di colture mostrate.
+ * - Integra la funzionalità di zoom e pan (plugin ChartZoom) per l'asse temporale del grafico.
+ * - Fornisce la funzionalità per scaricare il grafico di rotazione delle colture generato come PDF.
+ * - Include una funzione di utilità per generare colori casuali per gli elementi del grafico.
+ */
+
 let terrenoLoaded = false;
 
 document.getElementById('terreno-tab').addEventListener('click', function() {
