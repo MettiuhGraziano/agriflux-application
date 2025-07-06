@@ -94,7 +94,7 @@ Questo eseguirà i test unitari e di integrazione nei moduli `web`, `batch` e `s
 
 ## Costruito Con
 
--   [Spring Boot](https://spring.io/projects/spring-boot) (Versions: `web` - 3.5.3, `batch` - 3.4.7) - Framework applicativo principale.
+-   [Spring Boot](https://spring.io/projects/spring-boot) (Versions: `web` - 3.5.3, `batch` - 3.5.3) - Framework applicativo principale.
 -   [Spring Data JPA](https://spring.io/projects/spring-data-jpa) - Per l'interazione con il database.
 -   [Spring Batch](https://spring.io/projects/spring-batch) - Per l'elaborazione batch nel modulo `batch`.
 -   [Thymeleaf](https://www.thymeleaf.org/) - Motore di template Java lato server per il modulo `web`.
