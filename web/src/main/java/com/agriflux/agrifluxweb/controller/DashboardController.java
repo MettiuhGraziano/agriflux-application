@@ -26,12 +26,14 @@ import com.agriflux.agrifluxweb.service.dashboard.DashboardServiceImpl;
 import com.agriflux.agrifluxweb.service.dashboard.DataChartService;
 import com.agriflux.agrifluxweb.service.job.JobLauncherClientServiceImpl;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpSession;
 
 /**
  * Controller per la gestione, comunicazione e recupero dati tra pagine html
  */
 @Controller
+@Hidden
 public class DashboardController implements DataChartService {
 	
 	private final DashboardServiceImpl dashboardServiceImpl;
