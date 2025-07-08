@@ -106,29 +106,26 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 
 				const pulsanteRicerca = document.getElementById("ricercaTerreno");
 
-				//Se terreniDataList è stato selezionato, sblocco il pulsante di visualizzazione del grafico
 				pulsanteRicerca.removeAttribute("disabled");
 				pulsanteRicerca.addEventListener("click", function() {
 
-					// Se esiste già un grafico, viene distrutto prima di crearne uno nuovo
 					if (terrenoBarChartInstance) {
 						terrenoBarChartInstance.destroy();
 					}
 
 					const ctxLine = document.getElementById("rotazioneColtureBarChart").getContext("2d");
 
-					// *** PUNTO CHIAVE PER L'ALTEZZA DINAMICA ***
-					const BAR_HEIGHT = 40; // Altezza desiderata per ogni singola barra (in pixel)
-					const PADDING_PER_BAR = 10; // Spazio extra tra le barre per un po' di respiro
-					const MIN_CHART_HEIGHT = 200; // Altezza minima del grafico se ci sono poche barre
-					const TOP_BOTTOM_PADDING = 100; // Spazio extra per titoli, assi, legenda
+					const BAR_HEIGHT = 40;
+					const PADDING_PER_BAR = 10;
+					const MIN_CHART_HEIGHT = 200;
+					const TOP_BOTTOM_PADDING = 100;
 
 					var dateMin = new Date(dtoList[dtoList.length - 1].dateRilevazione[0]);
 					var dateMax = new Date(dtoList[0].dateRilevazione[dtoList[0].dateRilevazione.length - 1]);
 
 					const prodottiColtivati = [];
 
-					const datasetMap = new Map(); // Mappa per aggregare i dati per prodotto
+					const datasetMap = new Map();
 
 					for (let dto of dtoList) {
 					    const range = {
@@ -140,7 +137,7 @@ function rotazioneColtureBarChart(terrenoBarChartInstance) {
 					        datasetMap.get(dto.prodottoColtivato).data.push(range);
 					    } else {
 					        datasetMap.set(dto.prodottoColtivato, {
-					            label: 'Coltura ' + dto.idColtura,
+					            label: 'Coltura: #' + dto.idColtura,
 					            data: [range],
 					            borderColor: generaColoreRandom()
 					        });

@@ -136,7 +136,13 @@ function colturaLineChartDinamica(colturaLineChartInstance) {
 						scales: {
 							y: {
 								beginAtZero: false,
-								title: { display: true, text: 'Prezzo' }
+								title: { display: true, text: 'Prezzo' },
+								ticks: {
+									callback: function(value) {
+										
+										return value.toFixed(2) + ' €/Kg';
+									}
+								}
 							},
 							x: {
 								title: { display: true, text: 'Data Raccolto' },
@@ -325,7 +331,12 @@ function colturaLineBarChart(colturaLineBarChartInstance) {
 						scales: {
 							y: {
 								beginAtZero: false,
-								title: { display: true, text: 'Consumo Idrico' }
+								title: { display: true, text: 'Consumo Idrico' },
+								ticks: {
+									callback: function(value) {
+										return value + ' m³';
+									}
+								}
 							},
 							'x-ortaggi': {
 								beginAtZero: false,
@@ -384,7 +395,7 @@ function colturaLineBarChart(colturaLineBarChartInstance) {
 									}
 								}
 							}
-						}, onClick: (e, elements) => {
+						}, onClick: (elements) => {
 							//Se è un punto del line chart cliccato
 							if (elements.length > 0 && elements[0].datasetIndex === 1) {
 								const elementoClickato = elements[0];

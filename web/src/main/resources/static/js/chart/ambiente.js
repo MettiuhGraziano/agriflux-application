@@ -64,7 +64,6 @@ function ambienteLineChartDinamico(ambienteLineChartInstance) {
 		.then(data => {
 			const select = document.getElementById("parameterSelect");
 
-			// Popola la Select con le chiavi della mappa
 			data.forEach(parametro => {
 				const option = document.createElement("option");
 				option.value = parametro;
@@ -72,7 +71,6 @@ function ambienteLineChartDinamico(ambienteLineChartInstance) {
 				select.appendChild(option);
 			});
 
-			// Evento cambio selezione
 			select.addEventListener("change", function() {
 				const parametroSelezionato = this.value;
 
@@ -91,7 +89,6 @@ function ambienteLineChartDinamico(ambienteLineChartInstance) {
 						
 						const ctx = document.getElementById("ambienteLineChart").getContext("2d");
 
-						// Se esiste già un grafico, viene distrutto prima di crearne uno nuovo
 						if (ambienteLineChartInstance) {
 							ambienteLineChartInstance.destroy();
 						}
@@ -112,7 +109,24 @@ function ambienteLineChartDinamico(ambienteLineChartInstance) {
 								scales: {
 									y: {
 										beginAtZero: false,
-										title: { display: true, text: 'Valore' }
+										title: { display: true, text: 'Valore' },
+										ticks: {
+											callback: function(value) {
+												var unitaMisura;
+												if (parametroSelezionato == 'TEMPERATURA') {
+													unitaMisura = '°C';
+												} else if (parametroSelezionato == 'UMIDITA') {
+													unitaMisura = '%';
+												} else if (parametroSelezionato == 'PRECIPITAZIONI') {
+													unitaMisura = 'ml';
+												} else if (parametroSelezionato == 'IRRAGGIAMENTO') {
+													unitaMisura = 'kWh/m²';
+												} else if (parametroSelezionato == 'OMBREGGIAMENTO') {
+													unitaMisura = 'Fsh';
+												}
+												return `${value} ${unitaMisura}`;
+											}
+										}
 									},
 									x: {
 										type: 'time',
@@ -129,7 +143,7 @@ function ambienteLineChartDinamico(ambienteLineChartInstance) {
 								}, plugins: {
 									tooltip: {
 										callbacks: {
-											title: function(tooltipItems) {
+											title: function() {
 												return `Andamento ${parametroSelezionato}`;
 											},
 											label: function(context) {

@@ -78,7 +78,7 @@ function multilineFatturatoChart(multilineFatturatoChartInstance) {
 
 				pulsanteRicerca.removeAttribute("disabled");
 				pulsanteRicerca.addEventListener("click", function() {
-					// Se esiste già un grafico, viene distrutto prima di crearne uno nuovo
+
 					if (multilineFatturatoChartInstance) {
 						multilineFatturatoChartInstance.destroy();
 					}
@@ -86,15 +86,15 @@ function multilineFatturatoChart(multilineFatturatoChartInstance) {
 					const labels = [];
 					const ricavi = [];
 					const spese = [];
-					
+
 					dtoList.forEach(dto => {
 						labels.push(dto.annoRiferimento);
 						ricavi.push(dto.ricaviVendita);
 						spese.push(dto.speseGenerali);
 					});
-					
+
 					const ctxLine = document.getElementById("fatturatoMultilineChart").getContext("2d");
-					
+
 					multilineFatturatoChartInstance = new Chart(ctxLine, {
 						type: 'line',
 						data: {
@@ -116,12 +116,22 @@ function multilineFatturatoChart(multilineFatturatoChartInstance) {
 						}, options: {
 							responsive: true,
 							maintainAspectRatio: false,
-							plugins: {
-								scales: {
-									y: {
-										beginAtZero: true
+							scales: {
+								y: {
+									beginAtZero: true,
+									title: { display: true, text: 'Valore' },
+									ticks: {
+										callback: function(value) {
+											return value + ' €';
+										}
 									}
-								}, tooltip: {
+								},
+								x: {
+									title: { display: true, text: 'Anno Riferimento' },
+									beginAtZero: false
+								}
+							}, plugins: {
+								tooltip: {
 									callbacks: {
 										label: function(context) {
 											const label = context.dataset.label;

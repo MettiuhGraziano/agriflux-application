@@ -140,26 +140,26 @@ function produzioneMultipleChartLineRadar(produzioneLineChartInstance, produzion
 						data: {
 							labels: labelsAnnoRiferimento,
 							datasets: [{
-								label: `Quantita' di ${prodottoSelezionato} raccolto/a (KG)`,
+								label: `Quantita' di ${prodottoSelezionato} raccolto/a`,
 								data: quantitaRaccolto,
 								borderColor: 'rgb(0, 0, 128)',
 								backgroundColor: 'rgb(0, 0, 128)',
 								borderWidth: 3
 							}, {
-								label: `Quantita' di ${prodottoSelezionato} venduto/a (KG)`,
+								label: `Quantita' di ${prodottoSelezionato} venduto/a`,
 								data: quantitaRaccoltoVenduto,
 								borderColor: 'rgb(0, 255, 0)',
 								backgroundColor: 'rgb(0, 255, 0)',
 								borderWidth: 3
 							},
 							{
-								label: `Quantita' di ${prodottoSelezionato} marcio/a (KG)`,
+								label: `Quantita' di ${prodottoSelezionato} marcio/a`,
 								data: quantitaRaccoltoMarcio,
 								borderColor: 'rgb(210,105,30)',
 								backgroundColor: 'rgb(210,105,30)',
 								borderWidth: 3
 							}, {
-								label: `Quantita' di ${prodottoSelezionato} utilizzato per scopi terzi (KG)`,
+								label: `Quantita' di ${prodottoSelezionato} utilizzato per scopi terzi`,
 								data: quantitaRaccoltoTerzi,
 								borderColor: 'rgb(139,0,139)',
 								backgroundColor: 'rgb(139,0,139)',
@@ -170,11 +170,30 @@ function produzioneMultipleChartLineRadar(produzioneLineChartInstance, produzion
 							maintainAspectRatio: false,
 							scales: {
 								y: {
-									title: { display: true, text: 'Quantità Raccolto' }
+									title: { display: true, text: 'Quantità Raccolto' },
+									ticks: {
+										callback: function(value) {
+											return value + ' Kg';
+										}
+									}
 								},
 								x: {
 									title: { display: true, text: 'Anno Riferimento' },
 									beginAtZero: false
+								}
+							},
+							plugins: {
+								tooltip: {
+									callbacks: {
+										label: function(context) {
+											const label = context.dataset.label;
+											const value = context.formattedValue;
+
+											return [
+												`${label}: ${value} Kg`
+											];
+										}
+									}
 								}
 							}
 						}
@@ -436,7 +455,6 @@ function produzioneBarChartHorizontal(produzioneHorizontalBarChartInstance) {
 
 				const ctxBar = document.getElementById("produzioneBarChartHorizontal").getContext("2d");
 
-				// Se esiste già un grafico, viene distrutto prima di crearne uno nuovo
 				if (produzioneHorizontalBarChartInstance) {
 					produzioneHorizontalBarChartInstance.destroy();
 				}
