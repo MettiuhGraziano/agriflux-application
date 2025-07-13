@@ -395,7 +395,7 @@ function colturaLineBarChart(colturaLineBarChartInstance) {
 									}
 								}
 							}
-						}, onClick: (elements) => {
+						}, onClick: (e, elements) => {
 							//Se è un punto del line chart cliccato
 							if (elements.length > 0 && elements[0].datasetIndex === 1) {
 								const elementoClickato = elements[0];

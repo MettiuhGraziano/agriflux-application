@@ -18,10 +18,6 @@ public interface DatiParticellaRepository extends CrudRepository<Particella, Lon
 			+ " FROM Particella p")
 	List<ParticellaIdAnnoProjection> findAllParticellaIdAnnoProjection();
 	
-//	@Query("SELECT m.idMorfologia AS idMorfologia, c.prodottoColtivato AS prodottoColtivato, c.idColtura AS idColtura, "
-//	+ "t.dataRilevazione AS dataRilevazione FROM Terreno t JOIN t.morfologia m JOIN t.coltura c ORDER BY t.dataRilevazione ASC")
-//List<TerrenoMorfologiaColturaProjection> findTerrenoWithMorfologiaAndColturaProjection();
-	
 	@Query("SELECT p.idParticella AS idParticella, c.idColtura AS idColtura, o.nome AS nomeProdotto, r.dataRilevazione AS dataRilevazioneTerreno "
 			+ "FROM Particella p JOIN p.colture c JOIN c.ortaggio o JOIN p.rilevazioniTerreno r "
 			+ "WHERE r.dataRilevazione BETWEEN c.dataSemina AND c.dataRaccolto")

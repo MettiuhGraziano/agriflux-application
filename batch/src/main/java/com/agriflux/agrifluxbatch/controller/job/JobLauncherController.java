@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-
 @RestController("api/jobLauncher")
 @Tag(name = "Job Launcher Controller", description = "Client API servizi Rest esposti da Agriflux-Batch per funzionalità riguardanti i Job")
 public class JobLauncherController {
@@ -45,8 +44,6 @@ public class JobLauncherController {
     	
         jobLauncher.run(jobRegistry.getJob("simulationJob"), params);
     }
-    
-    //TODO CENSIRE METODO GET CHE RITORNA LO STATO DI ESECUZIONE DEL JOB "X"
     
     @GetMapping("/isJobExecuted")
     @Operation(summary = "Servizio di Audit per l'esecuzione del Job", description = "Restituisce true se esiste almeno una istanza di un Job a db, false altrimenti")
